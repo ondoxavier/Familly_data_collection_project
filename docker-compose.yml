@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: family_postgres
+    environment:
+      POSTGRES_USER: family_user
+      POSTGRES_PASSWORD: family_password
+      POSTGRES_DB: family_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - family_postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  neo4j:
+    image: neo4j:5
+    container_name: family_neo4j
+    environment:
+      NEO4J_AUTH: neo4j/family_password
+    ports:
+      - "7474:7474"  # interface web
+      - "7687:7687"  # protocole bolt (scripts/export_to_neo4j.py)
+    volumes:
+      - family_neo4j_data:/data
+
+volumes:
+  family_postgres_data:
+  family_neo4j_data:

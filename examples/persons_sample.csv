@@ -1,0 +1,5 @@
+id,branch_id,first_name,last_name,gender,birth_date_text,birth_place,is_alive,notes
+P001,B001,Jean,Ondo,M,1950,Libreville,true,Chef de famille
+P002,B001,Marie,Mba,F,1955,Lambaréné,true,Épouse de Jean
+P003,B001,Paul,Ondo,M,1980,Libreville,true,Fils de Jean et Marie
+P004,B001,Alice,Ondo,F,1985,Libreville,true,Fille de Jean et Marie

@@ -1,0 +1,10 @@
+{
+  "branch_id": "BRANCH_ID_HERE",
+  "first_name": "Paul",
+  "last_name": "Ondo",
+  "gender": "M",
+  "birth_date_text": "1980",
+  "birth_place": "Libreville",
+  "is_alive": true,
+  "notes": "Fils de Jean Ondo"
+}

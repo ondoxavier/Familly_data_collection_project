@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: family-data-collection-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false # coller ici l'URL Postgres (ex. fournie par Neon/Supabase)
+      - key: SECRET_KEY
+        generateValue: true

@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+.venv310/
+.env
+.DS_Store
+*.sqlite3
+*.db
+*.db-journal
+*.log
+.pytest_cache/
+pytest-cache-files-*/
+exports/
+neo4j_exports/
+.claude/
