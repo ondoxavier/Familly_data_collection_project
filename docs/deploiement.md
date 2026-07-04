@@ -74,10 +74,16 @@ d'inactivite ; le premier appel apres veille peut prendre 30-60 secondes.
    ```toml
    API_URL = "https://family-data-collection-api.onrender.com/api"
    PUBLIC_APP_URL = "https://<votre-app>.streamlit.app"
+   ADMIN_PASSWORD = "choisissez-un-mot-de-passe-solide"
    ```
 
-   (`app.py` lit `API_URL`/`PUBLIC_APP_URL` depuis `st.secrets` en priorite, avec
-   repli sur les variables d'environnement en local — aucun changement de code requis.)
+   (`app.py` lit ces valeurs depuis `st.secrets` en priorite, avec repli sur les
+   variables d'environnement en local — aucun changement de code requis.)
+
+   **`ADMIN_PASSWORD` est important** : sans lui, le mode Administrateur (liste de
+   toutes les branches, export, tokens) est accessible sans protection a quiconque
+   ouvre l'app sans lien de chef de famille. Un chef de famille ouvrant son propre
+   lien (`?token=...`) ne voit jamais le mode Administrateur, avec ou sans mot de passe.
 
 4. L'app est alors disponible sur une URL publique du type
    `https://<votre-app>.streamlit.app`.

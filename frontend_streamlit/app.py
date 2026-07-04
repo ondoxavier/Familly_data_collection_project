@@ -104,10 +104,28 @@ def create_person(payload: dict):
     return api_post("/persons", payload)
 
 
-mode = st.sidebar.radio("Mode", ["Administrateur", "Formulaire chef de famille"])
+token_from_url = st.query_params.get("token", "")
+if isinstance(token_from_url, list):
+    token_from_url = token_from_url[0] if token_from_url else ""
 
+if token_from_url:
+    # Un lien avec token identifie un chef de famille : jamais d'acces admin depuis ce lien.
+    mode = "Formulaire chef de famille"
+else:
+    mode = st.sidebar.radio("Mode", ["Administrateur", "Formulaire chef de famille"])
 
 if mode == "Administrateur":
+    admin_password = _config("ADMIN_PASSWORD", "")
+    if admin_password:
+        entered_password = st.sidebar.text_input("Mot de passe administrateur", type="password")
+        if entered_password != admin_password:
+            st.sidebar.warning("Mot de passe requis pour acceder au mode administrateur.")
+            st.stop()
+    else:
+        st.sidebar.warning(
+            "Aucun ADMIN_PASSWORD configure : le mode administrateur est accessible sans mot de passe."
+        )
+
     st.header("Branches familiales")
     with st.form("create_branch"):
         branch_name = st.text_input("Nom de la branche *", placeholder="Ex : Descendance de Jean Ondo")
@@ -190,9 +208,6 @@ if mode == "Administrateur":
         st.warning(f"Impossible de charger les doublons : {exc}")
 
 else:
-    token_from_url = st.query_params.get("token", "")
-    if isinstance(token_from_url, list):
-        token_from_url = token_from_url[0] if token_from_url else ""
     token = st.text_input("Token de la branche", value=token_from_url)
 
     if not token:
