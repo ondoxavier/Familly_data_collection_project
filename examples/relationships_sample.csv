@@ -1,0 +1,5 @@
+parent_id,child_id,link_type,certainty,notes
+P001,P003,biological,confirmed,
+P002,P003,biological,confirmed,
+P001,P004,biological,confirmed,
+P002,P004,biological,confirmed,

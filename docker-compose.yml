@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: family_postgres
+    environment:
+      POSTGRES_USER: family_user
+      POSTGRES_PASSWORD: family_password
+      POSTGRES_DB: family_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - family_postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  family_postgres_data:

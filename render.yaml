@@ -1,0 +1,48 @@
+services:
+  - type: web
+    name: family-data-api
+    runtime: python
+    region: frankfurt
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: APP_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: family-data-postgres
+          property: connectionString
+      - key: CORS_ORIGINS
+        value: https://family-data-frontend.onrender.com
+
+  - type: web
+    name: family-data-frontend
+    runtime: node
+    region: frankfurt
+    plan: free
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 24.12.0
+      - key: NEXT_PUBLIC_API_URL
+        value: https://family-data-api.onrender.com/api
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false
+
+databases:
+  - name: family-data-postgres
+    region: frankfurt
+    plan: free
+    databaseName: family_db
+    user: family_user
+    postgresMajorVersion: "16"
