@@ -19,7 +19,7 @@ services:
           name: family-data-postgres
           property: connectionString
       - key: CORS_ORIGINS
-        value: https://family-data-frontend.onrender.com
+        sync: false
 
   - type: web
     name: family-data-frontend
@@ -33,7 +33,7 @@ services:
       - key: NODE_VERSION
         value: 24.12.0
       - key: NEXT_PUBLIC_API_URL
-        value: https://family-data-api.onrender.com/api
+        sync: false
       - key: ADMIN_USERNAME
         value: admin
       - key: ADMIN_PASSWORD

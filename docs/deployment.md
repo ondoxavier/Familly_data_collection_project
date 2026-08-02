@@ -30,19 +30,19 @@ admin
 
 ## 3. Vérifier les URLs Render
 
-La configuration suppose ces URLs :
+Pour cette Blueprint, Render peut suffixer les noms des services. Dans l'instance actuelle :
 
 ```text
-Frontend: https://family-data-frontend.onrender.com
-API:      https://family-data-api.onrender.com/api
+Frontend: https://family-data-frontend-0wvz.onrender.com
+API:      https://family-data-api-0wvz.onrender.com/api
 ```
 
-Si Render attribue d'autres URLs, corriger ces variables dans le dashboard Render :
+Corriger ces variables dans le dashboard Render si les URLs affichées par Render sont différentes.
 
 Pour `family-data-frontend` :
 
 ```env
-NEXT_PUBLIC_API_URL=https://URL_DE_L_API/api
+NEXT_PUBLIC_API_URL=https://family-data-api-0wvz.onrender.com/api
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=mot_de_passe_admin
 ```
@@ -50,7 +50,7 @@ ADMIN_PASSWORD=mot_de_passe_admin
 Pour `family-data-api` :
 
 ```env
-CORS_ORIGINS=https://URL_DU_FRONTEND
+CORS_ORIGINS=https://family-data-frontend-0wvz.onrender.com
 ```
 
 Après modification, redéployer les services concernés.
