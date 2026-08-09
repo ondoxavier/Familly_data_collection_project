@@ -16,6 +16,7 @@ from app.schemas.family import (
     RemarkCreate, RemarkRead,
 )
 from app.services.export_service import export_branch_to_csv
+from app.services.duplicate_service import find_potential_duplicates
 
 router = APIRouter()
 
@@ -154,3 +155,16 @@ def export_branch(branch_id: str, db: Session = Depends(get_db)):
         media_type="application/zip",
         headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
+
+
+@router.get("/duplicates")
+def list_duplicates(db: Session = Depends(get_db)):
+    return find_potential_duplicates(db)
+
+
+@router.get("/branches/{branch_id}/duplicates")
+def list_branch_duplicates(branch_id: str, db: Session = Depends(get_db)):
+    branch = db.get(Branch, branch_id)
+    if not branch:
+        raise HTTPException(status_code=404, detail="Branche introuvable")
+    return find_potential_duplicates(db, branch_id=branch_id)

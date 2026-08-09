@@ -21,7 +21,8 @@ family_data_collection/
 ├── docs/                    # Documentation fonctionnelle et technique
 ├── examples/                # Exemples CSV / JSON
 ├── prompts/                 # Prompts pour le futur Graph RAG
-└── tests/                   # Tests unitaires
+├── scripts/                 # Pipeline d'import automatisé vers Neo4j
+└── tests/                   # Tests unitaires et d'intégration API
 ```
 
 ## Stack
@@ -108,8 +109,9 @@ http://localhost:3000/collecte/{token}
 - Ajouter un lien parent-enfant.
 - Ajouter une remarque ou une incertitude.
 - Suivre la collecte depuis le tableau de bord admin.
+- Détecter les doublons potentiels (même nom / date de naissance), y compris entre branches soumises par des chefs de famille différents.
 - Exporter les données en CSV compressés.
-- Préparer les données pour Neo4j.
+- Importer automatiquement les branches validées dans Neo4j (`scripts/export_to_neo4j.py`).
 
 ## Vérification
 
@@ -123,6 +125,16 @@ npm run build
 ```bash
 cd ..
 backend\.venv\Scripts\python.exe -m pytest tests
+```
+
+## Import vers Neo4j
+
+Le script `scripts/export_to_neo4j.py` importe directement depuis la base de collecte (pas besoin de manipuler des CSV) et est idempotent (relançable sans créer de doublons dans le graphe).
+
+```bash
+pip install -r scripts/requirements.txt
+copy scripts\.env.example scripts\.env   # renseigner NEO4J_URI / NEO4J_USER / NEO4J_PASSWORD
+python scripts/export_to_neo4j.py        # importe les branches au statut "submitted"
 ```
 
 ## Déploiement
